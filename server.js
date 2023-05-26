@@ -20,7 +20,7 @@ const server = net.createServer(socket => {
         if(spltd[0]=="##"){
             socket.write("LOAD")
             
-        }else{
+        }else if(locationData.length<20){
             console.log("HEARTBEAT", locationData);
             socket.write("ON");
             socket.write("**,imei:864035051711308,100")
