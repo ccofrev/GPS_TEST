@@ -18,7 +18,8 @@ const server = net.createServer(socket => {
     if(cuentaComas<=2){
         var spltd = locationData.split(',');
         if(spltd[0]=="##"){
-            socket.write("LOAD")
+            console.log("LOAD!");
+            socket.write("LOAD");
             
         }else if(locationData.length<20){
             console.log("HEARTBEAT", locationData);
