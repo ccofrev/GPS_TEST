@@ -16,16 +16,17 @@ const server = net.createServer(socket => {
     console.log('Datos:', locationData);
 
     if(cuentaComas<=2){
-        var spltd = locationData.split(',');
-        if(spltd[0]=="##"){
-            console.log("LOAD!");
-            socket.write("LOAD");
-            socket.write("**,imei:864035051711308,101,60s")
-            
-        }else if(locationData.length<20){
+        if(cuentaComas==0){
             console.log("HEARTBEAT", locationData);
             socket.write("ON");
             socket.write("**,imei:864035051711308,100")
+        }else{
+            var spltd = locationData.split(',');
+            if(spltd[0]=="##"){
+                console.log("LOAD!");
+                socket.write("LOAD");
+                socket.write("**,imei:864035051711308,101,60s")
+            }
         }
     }else if(cuentaComas==9){
         console.log("STATUS", locationData)
