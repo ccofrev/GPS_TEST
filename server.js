@@ -22,7 +22,7 @@ const server = net.createServer(socket => {
             socket.write("LOAD")
             
         }else{
-            console.log("HEARTBEAT", locationData.split(',')[1]);
+            console.log("HEARTBEAT", locationData);
             socket.write("ON");
             socket.write("**,imei:864035051711308,100")
         }
