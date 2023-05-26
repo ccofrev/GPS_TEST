@@ -1,0 +1,19 @@
+{
+  "name": "gps_test",
+  "version": "1.0.0",
+  "description": "hola hola",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccofrev/GPS_TEST.git"
+  },
+  "author": "Carlos Cofré",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccofrev/GPS_TEST/issues"
+  },
+  "homepage": "https://github.com/ccofrev/GPS_TEST#readme"
+}
