@@ -11,7 +11,10 @@ const server = net.createServer(socket => {
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
     const locationData = data.toString().trim();
+    var count = (locationData.match(/\,/g) || []).length;
+
     console.log('Datos de ubicación:', locationData);
+    console.log('comas', count)
 
     // Analizar los datos de ubicación
     const location = parseLocationData(locationData);
