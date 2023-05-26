@@ -2,7 +2,7 @@ const net = require('net');
 
 // Configuración del servidor TCP
 const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
-const PORT = 53; // Puerto en el que se escucha
+const PORT = 7070; // Puerto en el que se escucha
 
 // Crear un servidor TCP
 const server = net.createServer(socket => {
