@@ -11,17 +11,22 @@ const server = net.createServer(socket => {
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
     const locationData = data.toString().trim();
-    var count = (locationData.match(/\,/g) || []).length;
+    var cuentaComas = (locationData.match(/\,/g) || []).length;
 
     console.log('Datos de ubicación:', locationData);
-    console.log('comas', count)
+    console.log('comas', cuentaComas)
 
-    // Analizar los datos de ubicación
-    const location = parseLocationData(locationData);
-    console.log('Ubicación:', location);
+    if(cuentaComas==2){
+        console.log("HEARTBEAT", locationData.split(',')[1])
+    }else{
 
-    // Mostrar la ubicación en pantalla
-    displayLocation(location);
+        // Analizar los datos de ubicación
+        const location = parseLocationData(locationData);
+        console.log('Ubicación:', location);
+
+        // Mostrar la ubicación en pantalla
+        displayLocation(location);
+    }
   });
 
   // Manejar la desconexión del cliente
