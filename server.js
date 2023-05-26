@@ -33,7 +33,7 @@ const server = net.createServer(socket => {
         console.log('Ubicación:', location);
 
         // Mostrar la ubicación en pantalla
-        displayLocation(location);
+        //displayLocation(location);
     }
   });
 
