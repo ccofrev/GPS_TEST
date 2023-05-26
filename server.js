@@ -14,10 +14,16 @@ const server = net.createServer(socket => {
     var cuentaComas = (locationData.match(/\,/g) || []).length;
 
     console.log('Datos de ubicación:', locationData);
-    console.log('comas', cuentaComas)
+    console.log('comas', cuentaComas);
 
     if(cuentaComas==2){
-        console.log("HEARTBEAT", locationData.split(',')[1])
+        var spltd = locationData.split(',');
+        if(spltd[2]=="A"){
+            socket.write("LOAD")
+        }else{
+            console.log("HEARTBEAT", locationData.split(',')[1]);
+            socket.write("ON");
+        }
     }else{
 
         // Analizar los datos de ubicación
