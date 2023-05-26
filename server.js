@@ -16,10 +16,11 @@ const server = net.createServer(socket => {
     console.log('Datos de ubicación:', locationData);
     console.log('comas', cuentaComas);
 
-    if(cuentaComas==2){
+    if(cuentaComas<=2){
         var spltd = locationData.split(',');
         if(spltd[0]=="##"){
             socket.write("LOAD")
+            socket.write("**,imei:864035051711308,101,60s")
         }else{
             console.log("HEARTBEAT", locationData.split(',')[1]);
             socket.write("ON");
