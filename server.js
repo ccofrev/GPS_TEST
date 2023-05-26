@@ -13,8 +13,7 @@ const server = net.createServer(socket => {
     const locationData = data.toString().trim();
     var cuentaComas = (locationData.match(/\,/g) || []).length;
 
-    console.log('Datos de ubicación:', locationData);
-    console.log('comas', cuentaComas);
+    console.log('Datos:', locationData);
 
     if(cuentaComas<=2){
         var spltd = locationData.split(',');
@@ -26,6 +25,8 @@ const server = net.createServer(socket => {
             socket.write("ON");
             socket.write("**,imei:864035051711308,100")
         }
+    }else if(cuentaComas==9){
+        console.log("STATUS", locationData)
     }else{
 
         // Analizar los datos de ubicación
