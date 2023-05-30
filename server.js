@@ -58,14 +58,12 @@ function parseLocationData(data) {
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
   const speed = parseFloat(parts[11]);
-  const fix = 0.0;
 
   const location = {
     imei,
     latitude,
     longitude,
-    speed,
-    fix
+    speed
   };
 
   return location;
@@ -87,7 +85,6 @@ function displayLocation(location) {
   console.log('Latitud:', location.latitude);
   console.log('Longitud:', location.longitude);
   console.log('Velocidad:', location.speed);
-  console.log('Fix:', location.fix);
   // Aquí puedes realizar cualquier acción adicional con los datos de ubicación,
   // como almacenarlos en una base de datos o enviar notificaciones, etc.
 }
