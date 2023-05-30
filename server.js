@@ -58,7 +58,7 @@ function parseLocationData(data) {
   
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
-  const speed = parseFloat(parts[11]);
+  const speed = parts[11]!=''?parseFloat(parts[11]):0.0;
 
   const location = {
     imei,
