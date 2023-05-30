@@ -75,13 +75,13 @@ function parseLocationData(data) {
 }
 
 function coordConv(coord, pc){
-  (stGrad, stMin) = coord.split('.')
-  grad = parseFloat(stGrad)
-  stMin = parseFloat(stMin)
+  gm = coord.split('.').map((gm)=>{
+    return parseFloat(gm)
+  })
   factor = 1
   if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
     factor = -1
-  return (grad + min/60)*factor
+  return (gm[0] + gm[1]/60)*factor
 }
 
 // Función para mostrar la ubicación en pantalla
