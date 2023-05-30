@@ -37,6 +37,7 @@ const server = net.createServer(socket => {
         const location = parseLocationData(locationData);
         console.log('Ubicación:', location);
         if(location.motivo=='help me'){
+          console.log("HELP ME! cambiando relé")
           socket.write("**,imei:" + location.imei +"," + comando)
           comando = (comando == 109 ? 110:109)
         }
