@@ -53,10 +53,7 @@ function parseLocationData(data) {
   // IMEI,LATITUD,LONGITUD,VELOCIDAD,FIX
   const parts = data.split(',');
 
-  const imei = parts[0];
-  // const latitude = parseFloat(parts[7]+parts[8]+"");
-  // const longitude = parseFloat(parts[9]+parts[10]+"");
-  console.log("PARTS", parts)
+  const imei = parts[0].split(':')[1];
   
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
