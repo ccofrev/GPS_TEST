@@ -57,8 +57,9 @@ function parseLocationData(data) {
   // const latitude = parseFloat(parts[7]+parts[8]+"");
   // const longitude = parseFloat(parts[9]+parts[10]+"");
   console.log("PARTS", parts)
-  const latitude = parseFloat(parts[7]+parts[8]+"");
-  const longitude = parseFloat(parts[9]+parts[10]+"");
+  
+  const latitude = coordConv(parts[7], parts[8]);
+  const longitude = coordConv(parts[9],parts[10]);
   const speed = 0.0;
   const fix = 0.0;
 
@@ -71,6 +72,16 @@ function parseLocationData(data) {
   };
 
   return location;
+}
+
+function coordConv(coord, pc){
+  (stGrad, stMin) = coord.split('.')
+  grad = parseFloat(stGrad)
+  stMin = parseFloat(stMin)
+  factor = 1
+  if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
+    factor = -1
+  return (grad + min/60)*factor
 }
 
 // Función para mostrar la ubicación en pantalla
