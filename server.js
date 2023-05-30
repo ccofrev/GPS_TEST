@@ -78,10 +78,14 @@ function coordConv(coord, pc){
   gm = coord.split('.').map((gm)=>{
     return parseFloat(gm)
   })
+
+  posPunto = coord.indexOf('.')
+  de = parseFloat(coord.slice(0,posPunto-2))
+  mi = parseFloat(coord.slice(posPunto))
   factor = 1
   if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
     factor = -1
-  return (gm[0] + gm[1]/60)*factor
+  return (de + mi/60)*factor
 }
 
 // Función para mostrar la ubicación en pantalla
