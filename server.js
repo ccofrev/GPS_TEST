@@ -51,6 +51,7 @@ const server = net.createServer(socket => {
 function parseLocationData(data) {
   // Supongamos que el formato de datos de ubicación de Coban es el siguiente:
   // IMEI,LATITUD,LONGITUD,VELOCIDAD,FIX
+  if(data.includes("PROXY"))return '';
   const parts = data.split(',');
 
   const imei = parts[0].split(':')[1];
