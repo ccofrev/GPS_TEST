@@ -3,6 +3,7 @@ const net = require('net');
 // Configuración del servidor TCP
 const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
+let comando = 109;
 
 // Crear un servidor TCP
 const server = net.createServer(socket => {
@@ -35,6 +36,10 @@ const server = net.createServer(socket => {
         // Analizar los datos de ubicación
         const location = parseLocationData(locationData);
         console.log('Ubicación:', location);
+        if(location.motivo=='help me'){
+          socket.write("**,imei:" + location.imei +"," + comando)
+          comando = (comando == 109 ? 110:109)
+        }
 
         // Mostrar la ubicación en pantalla
         //displayLocation(location);
@@ -55,13 +60,14 @@ function parseLocationData(data) {
   const parts = data.split(',');
 
   const imei = parts[0].split(':')[1];
-  
+  const motivo = parts[1]
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
   const speed = parts[11]!=''?parseFloat(parts[11]):0.0;
 
   const location = {
     imei,
+    motivo,
     latitude,
     longitude,
     speed
@@ -83,6 +89,7 @@ function coordConv(coord, pc){
 // Función para mostrar la ubicación en pantalla
 function displayLocation(location) {
   console.log('IMEI:', location.imei);
+  console.log('Motivo:', location.motivo);
   console.log('Latitud:', location.latitude);
   console.log('Longitud:', location.longitude);
   console.log('Velocidad:', location.speed);
