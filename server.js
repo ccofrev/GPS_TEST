@@ -81,7 +81,7 @@ function coordConv(coord, pc){
 
   posPunto = coord.indexOf('.')
   de = parseFloat(coord.slice(0,posPunto-2))
-  mi = parseFloat(coord.slice(posPunto))
+  mi = parseFloat(coord.slice(posPunto-2))
   factor = 1
   if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
     factor = -1
