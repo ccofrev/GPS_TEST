@@ -75,17 +75,13 @@ function parseLocationData(data) {
 }
 
 function coordConv(coord, pc){
-  gm = coord.split('.').map((gm)=>{
-    return parseFloat(gm)
-  })
-
   posPunto = coord.indexOf('.')
-  de = parseFloat(coord.slice(0,posPunto-2))
+  gr = parseFloat(coord.slice(0,posPunto-2))
   mi = parseFloat(coord.slice(posPunto-2))
   factor = 1
   if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
     factor = -1
-  return (de + mi/60)*factor
+  return (gr + mi/60)*factor
 }
 
 // Función para mostrar la ubicación en pantalla
