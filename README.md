@@ -1,3 +1,3 @@
 # GPS_TEST
 
-hola hola
+Servidor básico para conexión GPS Tracker Coban (403A/B) y parseo de datos.
