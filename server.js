@@ -3,7 +3,7 @@ const net = require('net');
 // Configuración del servidor TCP
 const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
-let comando = 109;
+let codComando = 109;
 
 // Crear un servidor TCP
 const server = net.createServer(socket => {
@@ -12,40 +12,63 @@ const server = net.createServer(socket => {
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
     const locationData = data.toString().trim();
-    var cuentaComas = (locationData.match(/\,/g) || []).length;
+    //const cuentaComas = (locationData.match(/\,/g) || []).length;
 
     console.log('Datos:', locationData);
 
-    if(cuentaComas<=2){
-        if(cuentaComas==0){
-            console.log("HEARTBEAT", locationData);
-            socket.write("ON");
-            socket.write("**,imei:864035051711308,100")
-        }else{
-            var spltd = locationData.split(',');
-            if(spltd[0]=="##"){
-                console.log("LOAD!");
-                socket.write("LOAD");
-                socket.write("**,imei:864035051711308,101,60s")
-            }
-        }
-    }else if(cuentaComas==9){
-        console.log("STATUS", locationData)
-    }else{
+    // Expresiones regulares para detectar los tipos de paquetes
+    const regExLogin = /^##,imei:[^,]+,[^,]+;$/;
+    const regExHeartBeat = /^\d{15};$/;
+    const regExContenido = /^imei:(?:[^,]*,){19}[^;]*;$/;
 
-        // Analizar los datos de ubicación
-        const location = parseLocationData(locationData);
-        console.log('Ubicación:', location);
-        if(location.motivo=='help me'){
-          fullComando = "**,imei:" + location.imei +"," + comando
-          console.log("HELP ME! cambiando relé. Comando:", fullComando)
-          socket.write(fullComando)
-          comando = (comando == 109 ? 110:109)
-        }
 
-        // Mostrar la ubicación en pantalla
-        //displayLocation(location);
+    if(locationData.test(regExLogin)){
+      console.log("Login!")
+      socket.write("LOAD");
+    }else if(locationData.test(regExHeartBeat)){
+      console.log("Heartbeat!")
+      socket.write("ON");
+    }else if(locationData.test(regExContenido)){
+      // Analizar los datos de ubicación
+      const location = parseLocationData(locationData);
+      console.log('Ubicación:', location);
+      if(location.motivo=='help me'){
+        comando = "**,imei:" + location.imei +"," + codComando;
+        console.log("HELP ME! cambiando relé. Comando:", comando);
+        socket.write(comando);
+        codComando = (codComando == 109) ? 110 : 109;
+      }
     }
+
+
+  //   if(cuentaComas<=2){
+  //       if(cuentaComas==0){
+  //           if(locationData.length==16)
+  //           console.log("HEARTBEAT", locationData);
+  //           socket.write("ON");
+  //       }else{
+  //           let spltd = locationData.split(',');
+  //           if(spltd[0]=="##"){
+  //               console.log("LOAD!");
+  //               socket.write("LOAD");
+  //               //socket.write("**,imei:864035051711308,101,60s")
+  //           }
+  //       }
+  //   }else if(cuentaComas==9){
+  //       console.log("STATUS", locationData)
+  //   }else if(cuentaComas==19){
+
+  //       // Analizar los datos de ubicación
+  //       const location = parseLocationData(locationData);
+  //       console.log('Ubicación:', location);
+  //       if(location.motivo=='help me'){
+  //         comando = "**,imei:" + location.imei +"," + codComando;
+  //         console.log("HELP ME! cambiando relé. Comando:", comando);
+  //         socket.write(comando);
+  //         codComando = (codComando == 109) ? 110 : 109;
+  //       }
+
+  //   }
   });
 
   // Manejar la desconexión del cliente
@@ -58,7 +81,7 @@ const server = net.createServer(socket => {
 function parseLocationData(data) {
   // Supongamos que el formato de datos de ubicación de Coban es el siguiente:
   // IMEI,LATITUD,LONGITUD,VELOCIDAD,FIX
-  if(data.includes("PROXY"))return '';
+  
   const parts = data.split(',');
 
   const imei = parts[0].split(':')[1];
