@@ -1,7 +1,6 @@
 const net = require('net');
 
 // Configuración del servidor TCP
-// const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 const HOST = '127.0.0.1'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
 let codComando = 109;
@@ -56,7 +55,6 @@ function parseLocationData(data) {
   const imei = parts[0].split(':')[1];
   const keyword = parts[1];
   const time = parts[2];
-  // const cellNum = parts[3];
   const gpsState = parts[4];  // F/L F: gps valido L: no gps
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
@@ -65,13 +63,11 @@ function parseLocationData(data) {
   const acc = parseInt(parts[14]);
   const door = parseInt(parts[15]);
   const oil = parts[16];
-  // const temp = parts[18]!=''?parseFloat(parts[18]):0;
 
   const location = {
     imei,
     keyword,
     time,
-    // cellNum,
     gpsState,
     latitude,
     longitude,
@@ -80,7 +76,6 @@ function parseLocationData(data) {
     acc,
     door,
     oil,
-    // temp
   };
 
   return location;
