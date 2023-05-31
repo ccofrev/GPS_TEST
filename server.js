@@ -22,7 +22,7 @@ const server = net.createServer(socket => {
     if(regExContenido.test(gpsData)){
       // Analizar los datos de ubicación
       const location = parseLocationData(gpsData.slice(0, -1)); //se quita ;
-      console.log('Ubicación:', location);
+      console.log('GPS Data:', location);
 
       // toggle relé con botón de pánico. Solo para pruebas, quitar luego
       if(location.keyword=='help me'){
