@@ -23,13 +23,15 @@ const server = net.createServer(socket => {
       // Analizar los datos de ubicación
       const location = parseLocationData(GPSdata);
       console.log('Ubicación:', location);
+
+      // toggle relé con botón de pánico. Solo para pruebas, quitar luego
       if(location.motivo=='help me'){
-        // comando = "**,imei:" + location.imei +"," + codComando;
         comando = `**,imei:${location.imei},${codComando}`;
         console.log("HELP ME! cambiando relé. Comando:", comando);
         socket.write(comando);
         codComando = (codComando == 109) ? 110 : 109;
       }
+
     }else if(regExHeartBeat.test(GPSdata)){
       console.log("Heartbeat!")
       socket.write("ON");
@@ -52,22 +54,36 @@ function parseLocationData(data) {
   const parts = data.split(',');
 
   const imei = parts[0].split(':')[1];
-  const motivo = parts[1]
+  const keyword = parts[1];
+  const time = parts[2];
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
   const speed = parts[11]!=''?parseFloat(parts[11]):0.0;
+  const altitude = parts[13]!=''?parseFloat(parts[13]):0.0;
+  const acc = parts[14];
+  const door = parts[15];
+  const oil = parts[16];
+  const temp = parts[18];
 
   const location = {
     imei,
-    motivo,
+    keyword,
+    time,
     latitude,
     longitude,
-    speed
+    speed,
+    altitude,
+    acc,
+    door,
+    oil,
+    temp
   };
 
   return location;
 }
 
+// convierte formato <grado><minuto>.<decimalesMinuto>,<puntoCardinal>
+// a coordenadas decimales con negativo para sur y oeste (formato google maps)
 function coordConv(coord, pc){
   try{
     posPunto = coord.indexOf('.');
@@ -78,7 +94,7 @@ function coordConv(coord, pc){
   gr = parseFloat(coord.slice(0,posPunto-2))
   mi = parseFloat(coord.slice(posPunto-2))
   let factor = 1
-  if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
+  if(pc == 'S' || pc == 'W')
     factor = -1
   return (gr + mi/60)*factor
 }
