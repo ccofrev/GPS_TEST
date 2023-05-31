@@ -21,7 +21,7 @@ const server = net.createServer(socket => {
 
     if(regExContenido.test(GPSdata)){
       // Analizar los datos de ubicación
-      const location = parseLocationData(GPSdata);
+      const location = parseLocationData(GPSdata.slice(0, -1)); //se quita ;
       console.log('Ubicación:', location);
 
       // toggle relé con botón de pánico. Solo para pruebas, quitar luego
@@ -63,7 +63,7 @@ function parseLocationData(data) {
   const acc = parts[14];
   const door = parts[15];
   const oil = parts[16];
-  const temp = parts[18];
+  const temp = parts[18]!=''?parseFloat(parts[18]):0.0;;
 
   const location = {
     imei,
