@@ -32,11 +32,11 @@ const server = net.createServer(socket => {
       }
 
     }else if(regExHeartBeat.test(gpsData)){
-      console.log("Heartbeat!")
       socket.write("ON");
+      console.log("Heartbeat Ok!")
     }else if(regExLogin.test(gpsData)){
-      console.log("Login!")
       socket.write("LOAD");
+      console.log("Login Ok!")
     }
 
   });
