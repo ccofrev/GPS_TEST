@@ -16,18 +16,12 @@ const server = net.createServer(socket => {
 
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
-    const locationData = data.toString().trim();
-    //console.log('Datos:', locationData);
+    const GPSdata = data.toString().trim();
+    //console.log('Datos:', GPSdata);
 
-    if(regExLogin.test(locationData)){
-      console.log("Login!")
-      socket.write("LOAD");
-    }else if(regExHeartBeat.test(locationData)){
-      console.log("Heartbeat!")
-      socket.write("ON");
-    }else if(regExContenido.test(locationData)){
+    if(regExContenido.test(GPSdata)){
       // Analizar los datos de ubicación
-      const location = parseLocationData(locationData);
+      const location = parseLocationData(GPSdata);
       console.log('Ubicación:', location);
       if(location.motivo=='help me'){
         // comando = "**,imei:" + location.imei +"," + codComando;
@@ -36,6 +30,12 @@ const server = net.createServer(socket => {
         socket.write(comando);
         codComando = (codComando == 109) ? 110 : 109;
       }
+    }else if(regExHeartBeat.test(GPSdata)){
+      console.log("Heartbeat!")
+      socket.write("ON");
+    }else if(regExLogin.test(GPSdata)){
+      console.log("Login!")
+      socket.write("LOAD");
     }
 
   });
