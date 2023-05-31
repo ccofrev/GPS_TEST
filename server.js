@@ -42,8 +42,8 @@ const server = net.createServer(socket => {
       socket.write("LOAD");
       console.log("Login Ok!");
 
-      imei = gpsData.split(',')[1];
-      comando = `**,${imei},101,${periodo}s`;
+      imei = (gpsData.split(',')[1]).split(':')[1];
+      comando = `**,imei:${imei},101,${periodo}s`;
       console.log(`Login ok, enviando solicitud para recibir cada ${periodo}s. Comando: ${comando}`)
       socket.write(comando) // se configura para envío cada <periodo> segundos
     }
