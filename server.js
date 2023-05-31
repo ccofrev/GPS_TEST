@@ -25,7 +25,7 @@ const server = net.createServer(socket => {
       console.log('Ubicación:', location);
 
       // toggle relé con botón de pánico. Solo para pruebas, quitar luego
-      if(location.motivo=='help me'){
+      if(location.keyword=='help me'){
         comando = `**,imei:${location.imei},${codComando}`;
         console.log("HELP ME! cambiando relé. Comando:", comando);
         socket.write(comando);
