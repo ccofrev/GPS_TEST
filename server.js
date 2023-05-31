@@ -104,9 +104,10 @@ function parseLocationData(data) {
 function coordConv(coord, pc){
   try{
     posPunto = coord.indexOf('.');
+    if(posPunto<0)return 0
   }catch(error){
     //console.log("Error", error);
-    return
+    return 0
   }
   gr = parseFloat(coord.slice(0,posPunto-2))
   mi = parseFloat(coord.slice(posPunto-2))
