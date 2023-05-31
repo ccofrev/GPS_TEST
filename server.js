@@ -57,7 +57,7 @@ function parseLocationData(data) {
   const keyword = parts[1];
   const time = parts[2];
   const cellNum = parts[3];
-  const gpsState = parts[4];
+  const gpsState = parts[4];  // F/L F: gps valido L: no gps
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
   const speed = parts[11]!=''?parseFloat(parts[11]):0;
