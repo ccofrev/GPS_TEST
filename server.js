@@ -2,7 +2,7 @@ const net = require('net');
 
 // Configuración del servidor TCP
 // const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
-const HOST = 'localhost'; // Escucha en todas las interfaces de red
+const HOST = '127.0.0.1'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
 let codComando = 109;
 
