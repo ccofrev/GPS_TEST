@@ -34,9 +34,12 @@ const server = net.createServer(socket => {
     }else if(regExHeartBeat.test(gpsData)){
       socket.write("ON");
       console.log("Heartbeat Ok!")
+      socket.write("")
+
     }else if(regExLogin.test(gpsData)){
       socket.write("LOAD");
       console.log("Login Ok!")
+      socket.write(`**,${gpsData.split(',')[1]},101,30s`) // se configura para envío cada XXs
     }
 
   });
