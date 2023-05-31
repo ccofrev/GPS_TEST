@@ -5,6 +5,11 @@ const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
 let codComando = 109;
 
+// Expresiones regulares para detectar los tipos de paquetes
+const regExLogin = /^##,imei:[^,]+,[^,]+;$/;
+const regExHeartBeat = /^\d{15};$/;
+const regExContenido = /^imei:(?:[^,]*,){18}[^;]*;$/;
+
 // Crear un servidor TCP
 const server = net.createServer(socket => {
   console.log('Cliente conectado');
@@ -12,15 +17,7 @@ const server = net.createServer(socket => {
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
     const locationData = data.toString().trim();
-    //const cuentaComas = (locationData.match(/\,/g) || []).length;
-
-    console.log('Datos:', locationData);
-
-    // Expresiones regulares para detectar los tipos de paquetes
-    const regExLogin = /^##,imei:[^,]+,[^,]+;$/;
-    const regExHeartBeat = /^\d{15};$/;
-    const regExContenido = /^imei:(?:[^,]*,){18}[^;]*;$/;
-
+    //console.log('Datos:', locationData);
 
     if(regExLogin.test(locationData)){
       console.log("Login!")
@@ -51,8 +48,6 @@ const server = net.createServer(socket => {
 
 // Función para analizar los datos de ubicación recibidos
 function parseLocationData(data) {
-  // Supongamos que el formato de datos de ubicación de Coban es el siguiente:
-  // IMEI,LATITUD,LONGITUD,VELOCIDAD,FIX
   
   const parts = data.split(',');
 
