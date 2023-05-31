@@ -33,42 +33,14 @@ const server = net.createServer(socket => {
       const location = parseLocationData(locationData);
       console.log('Ubicación:', location);
       if(location.motivo=='help me'){
-        comando = "**,imei:" + location.imei +"," + codComando;
+        // comando = "**,imei:" + location.imei +"," + codComando;
+        comando = `**,imei:${location.imei},${codComando}`;
         console.log("HELP ME! cambiando relé. Comando:", comando);
         socket.write(comando);
         codComando = (codComando == 109) ? 110 : 109;
       }
     }
 
-
-  //   if(cuentaComas<=2){
-  //       if(cuentaComas==0){
-  //           if(locationData.length==16)
-  //           console.log("HEARTBEAT", locationData);
-  //           socket.write("ON");
-  //       }else{
-  //           let spltd = locationData.split(',');
-  //           if(spltd[0]=="##"){
-  //               console.log("LOAD!");
-  //               socket.write("LOAD");
-  //               //socket.write("**,imei:864035051711308,101,60s")
-  //           }
-  //       }
-  //   }else if(cuentaComas==9){
-  //       console.log("STATUS", locationData)
-  //   }else if(cuentaComas==19){
-
-  //       // Analizar los datos de ubicación
-  //       const location = parseLocationData(locationData);
-  //       console.log('Ubicación:', location);
-  //       if(location.motivo=='help me'){
-  //         comando = "**,imei:" + location.imei +"," + codComando;
-  //         console.log("HELP ME! cambiando relé. Comando:", comando);
-  //         socket.write(comando);
-  //         codComando = (codComando == 109) ? 110 : 109;
-  //       }
-
-  //   }
   });
 
   // Manejar la desconexión del cliente
@@ -106,26 +78,14 @@ function coordConv(coord, pc){
     posPunto = coord.indexOf('.');
     if(posPunto<0)return 0
   }catch(error){
-    //console.log("Error", error);
     return 0
   }
   gr = parseFloat(coord.slice(0,posPunto-2))
   mi = parseFloat(coord.slice(posPunto-2))
-  factor = 1
+  let factor = 1
   if(pc == 'S' || pc == 's' || pc == 'W' || pc == 'w')
     factor = -1
   return (gr + mi/60)*factor
-}
-
-// Función para mostrar la ubicación en pantalla
-function displayLocation(location) {
-  console.log('IMEI:', location.imei);
-  console.log('Motivo:', location.motivo);
-  console.log('Latitud:', location.latitude);
-  console.log('Longitud:', location.longitude);
-  console.log('Velocidad:', location.speed);
-  // Aquí puedes realizar cualquier acción adicional con los datos de ubicación,
-  // como almacenarlos en una base de datos o enviar notificaciones, etc.
 }
 
 // Iniciar el servidor y escuchar en el puerto especificado
