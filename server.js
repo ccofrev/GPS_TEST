@@ -16,12 +16,12 @@ const server = net.createServer(socket => {
 
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
-    const GPSdata = data.toString().trim();
-    //console.log('Datos:', GPSdata);
+    const gpsData = data.toString().trim();
+    //console.log('Datos:', gpsData);
 
-    if(regExContenido.test(GPSdata)){
+    if(regExContenido.test(gpsData)){
       // Analizar los datos de ubicación
-      const location = parseLocationData(GPSdata.slice(0, -1)); //se quita ;
+      const location = parseLocationData(gpsData.slice(0, -1)); //se quita ;
       console.log('Ubicación:', location);
 
       // toggle relé con botón de pánico. Solo para pruebas, quitar luego
@@ -32,10 +32,10 @@ const server = net.createServer(socket => {
         codComando = (codComando == 109) ? 110 : 109;
       }
 
-    }else if(regExHeartBeat.test(GPSdata)){
+    }else if(regExHeartBeat.test(gpsData)){
       console.log("Heartbeat!")
       socket.write("ON");
-    }else if(regExLogin.test(GPSdata)){
+    }else if(regExLogin.test(gpsData)){
       console.log("Login!")
       socket.write("LOAD");
     }
@@ -56,6 +56,8 @@ function parseLocationData(data) {
   const imei = parts[0].split(':')[1];
   const keyword = parts[1];
   const time = parts[2];
+  const cellNum = parts[3];
+  const gpsState = parts[4];
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
   const speed = parts[11]!=''?parseFloat(parts[11]):0;
@@ -69,6 +71,8 @@ function parseLocationData(data) {
     imei,
     keyword,
     time,
+    cellNum,
+    gpsState,
     latitude,
     longitude,
     speed,
