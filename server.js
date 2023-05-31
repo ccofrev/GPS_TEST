@@ -3,7 +3,9 @@ const net = require('net');
 // Configuración del servidor TCP
 const HOST = '0.0.0.0'; // Escucha en local
 const PORT = 7070; // Puerto en el que se escucha
-let codComando = 109;
+const periodo = 30 // periodo en segundos para configuración de envío de posición poro tiempo
+let codComando = 109; // comando para cortar corriente
+let imei = ''
 
 // Expresiones regulares para detectar los tipos de paquetes
 const regExLogin = /^##,imei:[^,]+,[^,]+;$/;
@@ -38,8 +40,12 @@ const server = net.createServer(socket => {
 
     }else if(regExLogin.test(gpsData)){
       socket.write("LOAD");
-      console.log("Login Ok!")
-      socket.write(`**,${gpsData.split(',')[1]},101,30s`) // se configura para envío cada XXs
+      console.log("Login Ok!");
+
+      imei = gpsData.split(',')[1];
+      comando = `**,imei:${imei},101,${periodo}s`;
+      console.log(`Login ok, enviando solicitud para recibir cada ${periodo}s. Comando: ${comando}`)
+      socket.write(comando) // se configura para envío cada XXs
     }
 
   });
