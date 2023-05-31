@@ -64,7 +64,8 @@ function parseLocationData(data) {
   const altitude = parts[13]!=''?parseFloat(parts[13]):0;
   const acc = parseInt(parts[14]);
   const door = parseInt(parts[15]);
-  const oil = parts[16];
+  const oil1 = parts[16];
+  const oil2 = parts[17];
   const temp = parts[18]!=''?parseFloat(parts[18]):0;
 
   const location = {
@@ -79,7 +80,8 @@ function parseLocationData(data) {
     altitude,
     acc,
     door,
-    oil,
+    oil1,
+    oil2,
     temp
   };
 
