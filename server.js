@@ -58,12 +58,12 @@ function parseLocationData(data) {
   const time = parts[2];
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
-  const speed = parts[11]!=''?parseFloat(parts[11]):0.0;
-  const altitude = parts[13]!=''?parseFloat(parts[13]):0.0;
-  const acc = parts[14];
-  const door = parts[15];
+  const speed = parts[11]!=''?parseFloat(parts[11]):0;
+  const altitude = parts[13]!=''?parseFloat(parts[13]):0;
+  const acc = parseInt(parts[14]);
+  const door = parseInt(parts[15]);
   const oil = parts[16];
-  const temp = parts[18]!=''?parseFloat(parts[18]):0.0;
+  const temp = parts[18]!=''?parseFloat(parts[18]):0;
 
   const location = {
     imei,
