@@ -1,7 +1,8 @@
 const net = require('net');
 
 // Configuración del servidor TCP
-const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
+// const HOST = '0.0.0.0'; // Escucha en todas las interfaces de red
+const HOST = 'localhost'; // Escucha en todas las interfaces de red
 const PORT = 7070; // Puerto en el que se escucha
 let codComando = 109;
 
@@ -17,7 +18,6 @@ const server = net.createServer(socket => {
   // Manejar los datos recibidos desde el cliente
   socket.on('data', data => {
     const gpsData = data.toString().trim();
-    //console.log('Datos:', gpsData);
 
     if(regExContenido.test(gpsData)){
       // Analizar los datos de ubicación
@@ -95,8 +95,8 @@ function coordConv(coord, pc){
   }catch(error){
     return 0
   }
-  gr = parseFloat(coord.slice(0,posPunto-2))
-  mi = parseFloat(coord.slice(posPunto-2))
+  let gr = parseFloat(coord.slice(0,posPunto-2))
+  let mi = parseFloat(coord.slice(posPunto-2))
   let factor = 1
   if(pc == 'S' || pc == 'W')
     factor = -1
