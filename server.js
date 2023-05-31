@@ -63,7 +63,7 @@ function parseLocationData(data) {
   const acc = parts[14];
   const door = parts[15];
   const oil = parts[16];
-  const temp = parts[18]!=''?parseFloat(parts[18]):0.0;;
+  const temp = parts[18]!=''?parseFloat(parts[18]):0.0;
 
   const location = {
     imei,
