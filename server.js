@@ -22,13 +22,13 @@ const server = net.createServer(socket => {
     const regExContenido = /^imei:(?:[^,]*,){19}[^;]*;$/;
 
 
-    if(locationData.test(regExLogin)){
+    if(regExLogin.test(locationData)){
       console.log("Login!")
       socket.write("LOAD");
-    }else if(locationData.test(regExHeartBeat)){
+    }else if(regExHeartBeat.test(locationData)){
       console.log("Heartbeat!")
       socket.write("ON");
-    }else if(locationData.test(regExContenido)){
+    }else if(regExContenido.test(locationData)){
       // Analizar los datos de ubicación
       const location = parseLocationData(locationData);
       console.log('Ubicación:', location);
