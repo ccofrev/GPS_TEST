@@ -56,7 +56,7 @@ function parseLocationData(data) {
   const imei = parts[0].split(':')[1];
   const keyword = parts[1];
   const time = parts[2];
-  const cellNum = parts[3];
+  // const cellNum = parts[3];
   const gpsState = parts[4];  // F/L F: gps valido L: no gps
   const latitude = coordConv(parts[7], parts[8]);
   const longitude = coordConv(parts[9], parts[10]);
@@ -71,7 +71,7 @@ function parseLocationData(data) {
     imei,
     keyword,
     time,
-    cellNum,
+    // cellNum,
     gpsState,
     latitude,
     longitude,
