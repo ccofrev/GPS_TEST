@@ -19,7 +19,7 @@ const server = net.createServer(socket => {
     // Expresiones regulares para detectar los tipos de paquetes
     const regExLogin = /^##,imei:[^,]+,[^,]+;$/;
     const regExHeartBeat = /^\d{15};$/;
-    const regExContenido = /^imei:(?:[^,]*,){19}[^;]*;$/;
+    const regExContenido = /^imei:(?:[^,]*,){18}[^;]*;$/;
 
 
     if(regExLogin.test(locationData)){
